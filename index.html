@@ -1,69 +1,200 @@
 <!DOCTYPE html>
-<html lang="spanish">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Stats Dashboard</title>
   <link rel="stylesheet" href="assets/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Tooltips accesibles para todos los elementos con data-tooltip.
+       - Aparecen al hover y al focus (teclado).
+       - Están posicionados arriba y centrados respecto al elemento.
+       - No alteran la estética base (colores sobrios). */
+
+    [data-tooltip] {
+      position: relative;
+      outline: none; /* no forzar cambio visual por tooltip */
+    }
+
+    /* Mostrar tooltip en hover */
+    [data-tooltip]:hover::after,
+    [data-tooltip]:focus::after,
+    [data-tooltip]:focus-visible::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(20,20,20,0.95);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 6px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      opacity: 1;
+    }
+
+    /* Flecha pequeña bajo el tooltip */
+    [data-tooltip]:hover::before,
+    [data-tooltip]:focus::before,
+    [data-tooltip]:focus-visible::before {
+      content: "";
+      position: absolute;
+      bottom: 115%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: rgba(20,20,20,0.95) transparent transparent transparent;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Make tooltips keyboard accessible with visible focus (doesn't change layout) */
+    [data-tooltip]:focus-visible {
+      outline: 2px solid rgba(0,120,215,0.25);
+      outline-offset: 4px;
+    }
+  </style>
 </head>
 <body>
   <div class="page-container">
-    <div class="app-container">
+    <div class="app-container" role="main" aria-label="Contenido principal de la aplicación">
 
       <!-- Header -->
-      <header class="header">
+      <header class="header" role="banner">
         <h1>STATS</h1>
-        <button class="search-btn">
+        <button class="search-btn" aria-label="Buscar" data-tooltip="Buscar">
           <img src="assets/img/lupa.png" alt="Buscar" class="icon-dark">
         </button>
       </header>
 
       <!-- Días -->
-      <div class="weekdays">
-        <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+      <div class="weekdays" role="region" aria-label="Días de la semana">
+        <span tabindex="0" aria-label="Lunes">L</span>
+        <span tabindex="0" aria-label="Martes">M</span>
+        <span tabindex="0" aria-label="Miércoles">M</span>
+        <span tabindex="0" aria-label="Jueves">J</span>
+        <span tabindex="0" aria-label="Viernes">V</span>
+        <span tabindex="0" aria-label="Sábado">S</span>
+        <span tabindex="0" aria-label="Domingo">D</span>
       </div>
 
       <!-- Contenedor de estadísticas y entrenos -->
-      <div class="stats-section">
+      <div class="stats-section" role="region" aria-label="Estadísticas y entrenamientos">
         <!-- Entrenos recientes -->
-        <section class="trainings card">
+        <section class="trainings card" role="region" aria-label="Entrenos recientes">
           <div class="card-header">
             <h2>Entrenos Recientes</h2>
           </div>
-          <ul class="training-list">
-            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Tren Superior</strong> – 45 min</li>
-            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Cardio HIIT</strong> – 30 min</li>
-            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Yoga</strong> – 25 min</li>
-            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Día de Piernas</strong> – 50 min</li>
-            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Ciclismo</strong> – 40 min</li>
+          <ul class="training-list" aria-label="Lista de entrenamientos recientes">
+            <li tabindex="0">
+              <img src="assets/img/mancuerna.png" class="icon-sm" alt="Icono de entrenamiento" data-tooltip="Entreno: Tren Superior"> 
+              <strong>Tren Superior</strong> – 45 min
+            </li>
+            <li tabindex="0">
+              <img src="assets/img/mancuerna.png" class="icon-sm" alt="Icono de entrenamiento" data-tooltip="Entreno: Cardio HIIT"> 
+              <strong>Cardio HIIT</strong> – 30 min
+            </li>
+            <li tabindex="0">
+              <img src="assets/img/mancuerna.png" class="icon-sm" alt="Icono de entrenamiento" data-tooltip="Entreno: Yoga"> 
+              <strong>Yoga</strong> – 25 min
+            </li>
+            <li tabindex="0">
+              <img src="assets/img/mancuerna.png" class="icon-sm" alt="Icono de entrenamiento" data-tooltip="Entreno: Día de Piernas"> 
+              <strong>Día de Piernas</strong> – 50 min
+            </li>
+            <li tabindex="0">
+              <img src="assets/img/mancuerna.png" class="icon-sm" alt="Icono de entrenamiento" data-tooltip="Entreno: Ciclismo"> 
+              <strong>Ciclismo</strong> – 40 min
+            </li>
           </ul>
         </section>
 
         <!-- Estadísticas -->
-        <section class="card stats-card">
+        <section class="card stats-card" role="region" aria-label="Resumen semanal y gráfico">
           <div class="card-header">
             <h2>Resumen Semanal</h2>
-            <button class="ai-btn">
-              <img src="assets/img/ia.png" alt="IA" class="icon-dark">
-            </button>
+            <div style="display: flex; gap: 6px;">
+              <button class="ai-btn" aria-label="Asistente de inteligencia artificial" data-tooltip="IA">
+                <img src="assets/img/ia.png" alt="IA" class="icon-dark">
+              </button>
+              <!-- Botón para alternar entre gráfico y texto -->
+              <button id="toggle-view" aria-pressed="false" aria-label="Cambiar vista de gráfico a texto" data-tooltip="Cambiar vista">
+                <img src="assets/img/cambio.png" alt="Cambiar vista" class="icon-dark">
+              </button>
+            </div>
           </div>
-          <div class="chart-container">
-            <canvas id="radarChart"></canvas>
+          <div class="chart-container" aria-label="Gráfico de radar con estadísticas semanales">
+            <canvas id="radarChart" role="img" aria-label="Gráfico de radar que muestra Strength, Cardio, Mood, Nutrition y Sleep"></canvas>
+
+            <!-- Texto que reemplaza exactamente al canvas cuando se activa -->
+            <div id="stats-text" aria-live="polite" style="display: none; flex-direction: column; justify-content: space-around; height: 100%; padding: 20px 0;">
+            <p><strong>Fuerza:</strong> 80%</p>
+            <p><strong>Cardio:</strong> 70%</p>
+            <p><strong>Estado de ánimo:</strong> 60%</p>
+            <p><strong>Nutrición:</strong> 85%</p>
+            <p><strong>Sueño:</strong> 75%</p>
+            </div>
           </div>
         </section>
       </div>
 
       <!-- Footer -->
-      <footer class="footer">
-        <button><img src="assets/img/mancuerna.png" class="icon" alt="Entrenos"></button>
-        <button><img src="assets/img/alimentacion.png" class="icon" alt="Comida"></button>
-        <button class="home-btn"><img src="assets/img/lupa.png" class="icon-dark" alt="Inicio"></button>
-        <button><img src="assets/img/dormir.png" class="icon" alt="Dormir"></button>
-        <button><img src="assets/img/ajustes.png" class="icon" alt="Ajustes"></button>
+      <footer class="footer" role="contentinfo" aria-label="Barra de navegación">
+        <button aria-label="Entrenamientos" data-tooltip="Entrenamientos">
+          <img src="assets/img/mancuerna.png" class="icon" alt="Entrenos">
+        </button>
+        <button aria-label="Alimentación" data-tooltip="Comida">
+          <img src="assets/img/alimentacion.png" class="icon" alt="Comida">
+        </button>
+        <button class="home-btn" aria-label="Ir al inicio" data-tooltip="Inicio">
+          <img src="assets/img/lupa.png" class="icon-dark" alt="Inicio">
+        </button>
+        <button aria-label="Sueño" data-tooltip="Dormir">
+          <img src="assets/img/dormir.png" class="icon" alt="Dormir">
+        </button>
+        <button aria-label="Ajustes" data-tooltip="Ajustes">
+          <img src="assets/img/ajustes.png" class="icon" alt="Ajustes">
+        </button>
       </footer>
     </div>
   </div>
+
+  <script>
+    // Alternar entre gráfico y texto — ahora reemplaza exactamente el canvas en su contenedor
+    const toggleButton = document.getElementById('toggle-view');
+    const radarCanvas = document.getElementById('radarChart');
+    const statsText = document.getElementById('stats-text');
+
+    toggleButton.addEventListener('click', () => {
+      const showingChart = window.getComputedStyle(radarCanvas).display !== 'none';
+      if (showingChart) {
+        // esconder canvas y mostrar texto (ocupa mismo espacio)
+        radarCanvas.style.display = 'none';
+        statsText.style.display = 'flex';
+        toggleButton.setAttribute('aria-pressed', 'true');
+        toggleButton.setAttribute('aria-label', 'Cambiar a vista gráfica');
+      } else {
+        // volver al canvas
+        radarCanvas.style.display = 'block';
+        statsText.style.display = 'none';
+        toggleButton.setAttribute('aria-pressed', 'false');
+        toggleButton.setAttribute('aria-label', 'Cambiar a vista de texto');
+      }
+    });
+
+    // (Opcional) asegurar que al cargar la página el canvas se muestre y el texto no
+    window.addEventListener('DOMContentLoaded', () => {
+      radarCanvas.style.display = 'block';
+      statsText.style.display = 'none';
+    });
+  </script>
 
   <script src="assets/js/main.js"></script>
 </body>

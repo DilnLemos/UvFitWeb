@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="spanish">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Stats Dashboard</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="page-container">
+    <div class="app-container">
+
+      <!-- Header -->
+      <header class="header">
+        <h1>STATS</h1>
+        <button class="search-btn">
+          <img src="assets/img/lupa.png" alt="Buscar" class="icon-dark">
+        </button>
+      </header>
+
+      <!-- Días -->
+      <div class="weekdays">
+        <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+      </div>
+
+      <!-- Contenedor de estadísticas y entrenos -->
+      <div class="stats-section">
+        <!-- Entrenos recientes -->
+        <section class="trainings card">
+          <div class="card-header">
+            <h2>Entrenos Recientes</h2>
+          </div>
+          <ul class="training-list">
+            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Tren Superior</strong> – 45 min</li>
+            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Cardio HIIT</strong> – 30 min</li>
+            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Yoga</strong> – 25 min</li>
+            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Día de Piernas</strong> – 50 min</li>
+            <li><img src="assets/img/mancuerna.png" class="icon-sm" alt=""> <strong>Ciclismo</strong> – 40 min</li>
+          </ul>
+        </section>
+
+        <!-- Estadísticas -->
+        <section class="card stats-card">
+          <div class="card-header">
+            <h2>Resumen Semanal</h2>
+            <button class="ai-btn">
+              <img src="assets/img/ia.png" alt="IA" class="icon-dark">
+            </button>
+          </div>
+          <div class="chart-container">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <button><img src="assets/img/mancuerna.png" class="icon" alt="Entrenos"></button>
+        <button><img src="assets/img/alimentacion.png" class="icon" alt="Comida"></button>
+        <button class="home-btn"><img src="assets/img/lupa.png" class="icon-dark" alt="Inicio"></button>
+        <button><img src="assets/img/dormir.png" class="icon" alt="Dormir"></button>
+        <button><img src="assets/img/ajustes.png" class="icon" alt="Ajustes"></button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
